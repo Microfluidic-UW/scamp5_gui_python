@@ -17,8 +17,7 @@ class ScampCamera:
 
     def update(self):
         """
-        Musi być wywoływane cyklicznie przez GUI.
-        Obsługuje komunikację i odbiera pakiety.
+        Must be called in cycle
         """
 
         if not self.connected:

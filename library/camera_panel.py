@@ -16,7 +16,7 @@ class CameraPanel(ctk.CTkFrame):
 
         self.running = False
 
-        # przechowujemy tylko ostatnią klatkę
+        # keep last frame only
         self.latest_frame = None
         self.frame_size = None
 
@@ -65,7 +65,6 @@ class CameraPanel(ctk.CTkFrame):
                 state="disabled"
             )
 
-            # szybka pętla komunikacji z kamerą
             self.after(1, self.camera_loop)
 
         except Exception as e:
@@ -82,7 +81,7 @@ class CameraPanel(ctk.CTkFrame):
 
         self.camera.update()
 
-        # szybkie odpytywanie kamery
+        # fast camera requests
         self.after(1, self.camera_loop)
 
     # ------------------------------------------------
@@ -93,7 +92,7 @@ class CameraPanel(ctk.CTkFrame):
 
         frame = np.frombuffer(buffer, dtype=np.uint8).reshape((h, w))
 
-        # zapisujemy tylko ostatnią klatkę
+        # save last frame
         self.latest_frame = frame
         self.frame_size = (w, h)
 
