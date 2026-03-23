@@ -38,16 +38,18 @@ class ScampCamera:
         if packet['type'] != 'data':
             return
 
-        datatype = packet['datatype']
+        if packet['datatype'] in ["SCAMP5_AOUT", "SCAMP5_DOUT"]:
 
-        if datatype in ["SCAMP5_AOUT", "SCAMP5_DOUT"]:
+            if 'buffer' not in packet:
+                return
 
             w = packet['width']
             h = packet['height']
             buffer = packet['buffer']
+            channel = packet.get('channel', 0)
 
             if self.frame_callback:
-                self.frame_callback(buffer, w, h)
+                self.frame_callback(buffer, w, h, channel)
 
     def close(self):
         scamp.close()
