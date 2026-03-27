@@ -107,6 +107,8 @@ class CameraPanel(ctk.CTkFrame):
         except Exception as e:
             self.image_label.configure(text=str(e))
 
+        else:
+            self.camera.open_tcp("127.0.0.1", 27888)
     # ------------------------------------------------
     # SCAMP COMMUNICATION LOOP
     # ------------------------------------------------
@@ -128,9 +130,16 @@ class CameraPanel(ctk.CTkFrame):
 
     def on_new_frame(self, buffer, w, h, channel):
 
+        # mapowanie dynamiczne
         if channel not in self.channel_map:
-            return
 
+            if self.next_channel_index < 6:
+                self.channel_map[channel] = self.next_channel_index
+                self.next_channel_index += 1
+
+            else:
+                return
+        print("CHANNEL:", channel)
         mapped_ch = self.channel_map[channel]
 
         frame = np.frombuffer(buffer, dtype=np.uint8).reshape((h, w))
