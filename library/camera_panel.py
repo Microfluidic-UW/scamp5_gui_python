@@ -116,12 +116,10 @@ class CameraPanel(ctk.CTkFrame):
 
     def camera_loop(self):
 
-        if not self.running:
+        if not self.running or not self.winfo_exists():
             return
 
         self.camera.update()
-
-        # fast camera requests
         self.after(1, self.camera_loop)
 
     # ------------------------------------------------
@@ -150,7 +148,8 @@ class CameraPanel(ctk.CTkFrame):
     def gui_update(self):
 
         now = time.time()
-
+        if not self.winfo_exists():
+            return
         # max 30 FPS
         if now - self.last_gui_time < 1/30:
             self.after(5, self.gui_update)
@@ -180,7 +179,9 @@ class CameraPanel(ctk.CTkFrame):
 
     def destroy(self):
 
-        if self.running:
+        self.running = False
+
+        if self.camera:
             self.camera.close()
 
         super().destroy()

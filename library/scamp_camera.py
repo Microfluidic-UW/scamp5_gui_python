@@ -6,6 +6,7 @@ class ScampCamera:
     def __init__(self):
         self.connected = False
         self.frame_callback = None
+        self.data_callback = None
 
     def open_usb(self, device="0"):
         scamp.open_usb(device)
@@ -50,6 +51,12 @@ class ScampCamera:
 
             if self.frame_callback:
                 self.frame_callback(buffer, w, h, channel)
+        elif packet['datatype'] == 'VS_POST_INT32':
+
+            data = packet.get('data', [])
+
+            if hasattr(self, "data_callback") and self.data_callback:
+                self.data_callback(data)
 
     def close(self):
         scamp.close()
