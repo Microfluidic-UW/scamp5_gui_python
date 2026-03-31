@@ -20,7 +20,7 @@ class App(ctk.CTk):
         self.control = ScampControl(self)
         self.control.grid(row=0, column=1, sticky='nsew', padx=10, pady=10)
 
-        # przycisk do otwarcia plotów
+        # open plots button
         self.plot_button = ctk.CTkButton(
             self.control,
             text="Open Plots",
@@ -41,7 +41,7 @@ class App(ctk.CTk):
         if self.plot_window is None or not self.plot_window.winfo_exists():
             self.plot_window = PlotWindow(self)
 
-            # 🔴 KLUCZOWE POŁĄCZENIE
+            # Key connection
             self.camera.camera.data_callback = self.plot_window.on_scamp_data
     
     def on_close(self):

@@ -52,7 +52,7 @@ class PlotWindow(ctk.CTkToplevel):
         self.after(100, self.update_plot)
 
     # ----------------------------------------
-    # CALLBACK Z SCAMP
+    # CALLBACK FROM SCAMP
     # ----------------------------------------
 
     def on_scamp_data(self, data):

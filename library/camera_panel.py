@@ -31,7 +31,7 @@ class CameraPanel(ctk.CTkFrame):
         self.fps_label = ctk.CTkLabel(self, text="FPS: 0")
         self.fps_label.pack()
 
-        # ===== GRID NA OBRAZY =====
+        # ===== GRID FOR IMAGES =====
         self.image_labels = {}
 
         titles = {
@@ -56,12 +56,11 @@ class CameraPanel(ctk.CTkFrame):
 
         self.image_labels = {}
         self.channel_map = {
-            101: 0,  # Captured
-            102: 1,  # Threshold
-            103: 2,  # Flood
-            104: 3,  # Remove BG
-            105: 4,  # Erode
-            106: 5   # Re-Flood (if exists)
+            101: 0,  # Threshold
+            102: 1,  # Flood
+            103: 2,  # Remove BG
+            104: 3,  # Erode BG
+            105: 4,  # Re-flood
         }
         self.next_channel_index = 0
         self.last_rendered = {}
@@ -123,12 +122,12 @@ class CameraPanel(ctk.CTkFrame):
         self.after(1, self.camera_loop)
 
     # ------------------------------------------------
-    # FRAME CALLBACK (very lightweight)
+    # FRAME CALLBACK
     # ------------------------------------------------
 
     def on_new_frame(self, buffer, w, h, channel):
 
-        # mapowanie dynamiczne
+        # dynamic mapping
         if channel not in self.channel_map:
 
             if self.next_channel_index < 6:

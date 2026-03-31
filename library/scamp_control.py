@@ -86,7 +86,7 @@ class ScampControl(ctk.CTkFrame):
             label.configure(text=f"{text}: {value}")
             self.params[text] = value
 
-            # 🔴 LIVE SYNC
+            # LIVE SYNC
             self.send_to_scamp(text, value)
 
         slider.configure(command=on_change)
@@ -108,7 +108,7 @@ class ScampControl(ctk.CTkFrame):
             value = var.get()
             self.params[text] = value
 
-            # 🔴 LIVE SYNC
+            # LIVE SYNC
             self.send_to_scamp(text, value)
 
         switch.configure(command=on_toggle)
